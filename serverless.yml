@@ -69,6 +69,7 @@ functions:
       DB_NAME: ${self:custom.observationsDb.connectInfo.DATABASE_NAME}
       DB_PASSWORD: ${self:custom.observationsDb.connectInfo.WQP_READ_ONLY_PASSWORD}
       AWS_DEPLOYMENT_REGION: ${self:provider.region}
+      LOG_LEVEL: INFO
       STAGE: ${self:provider.stage}
     events:
       - schedule:

@@ -73,19 +73,21 @@ def _stop_db(db, triggers):
 
 
 def stop_observations_db(event, context):
+    logger.info("enter stop_observations_db")
     if os.getenv('STAGE') != 'TEST' and os.getenv('STAGE') != 'QA':
         raise Exception(f"stage not recognized {os.getenv('STAGE')}")
     should_stop = _run_query()
     if not should_stop:
+        logger.info("ran query and showed it was busy, quit")
         return {
             'statusCode': 200,
             'message': f"Could not stop the {os.getenv('STAGE')} observations db. It was busy."
         }
     if os.getenv('STAGE') == 'TEST':
-        logger.debug("trying to stop test database")
+        logger.info("trying to stop test database")
         boto3.client('rds').stop_db_instance(DBInstanceIdentifier='observations-test')
     else:
-        logger.debug("trying to stop qa database")
+        logger.info("trying to stop qa database")
         boto3.client('rds').stop_db_instance(DBInstanceIdentifier='observations-qa')
     return {
         'statusCode': 200,
@@ -123,6 +125,7 @@ def control_db_utilization(event, context):
 def _run_query():
     rds = RDS()
     result = rds.execute_sql(SQL)
+    logger.info(f"run query result {result} for SQL {SQL}")
     if result[0] > 0:
         logger.debug(f"Cannot shutdown down observations test db because {result[0]} processes are running")
         return False
