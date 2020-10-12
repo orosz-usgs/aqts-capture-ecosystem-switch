@@ -41,10 +41,11 @@ def stop_db_cluster(cluster_identifier):
     return True
 
 
-def purge_queue(queue_name):
-    sqs = boto3.client('sqs', os.getenv('AWS_DEPLOYMENT_REGION'))
-    queue_info = sqs.get_queue_url(QueueName=queue_name)
-    sqs.purge_queue(QueueUrl=queue_info['QueueUrl'])
+def purge_queue(queue_names):
+    for queue_name in queue_names:
+        sqs = boto3.client('sqs', os.getenv('AWS_DEPLOYMENT_REGION'))
+        queue_info = sqs.get_queue_url(QueueName=queue_name)
+        sqs.purge_queue(QueueUrl=queue_info['QueueUrl'])
 
 
 def disable_triggers(function_names):

@@ -7,8 +7,8 @@ import logging
 
 TEST_DB = 'nwcapture-test'
 QA_DB = 'nwcapture-qa'
-SQS_TEST = 'aqts-capture-trigger-queue-TEST'
-SQS_QA = 'aqts-capture-trigger-queue-QA'
+SQS_TEST = ['aqts-capture-trigger-queue-TEST', 'aqts-capture-error-queue-TEST']
+SQS_QA = ['aqts-capture-trigger-queue-QA', 'aqts-capture-error-queue-QA']
 TEST_LAMBDA_TRIGGERS = [
     'aqts-capture-trigger-TEST-aqtsCaptureTrigger', 'aqts-capture-trigger-tmp-TEST-aqtsCaptureTrigger']
 QA_LAMBDA_TRIGGERS = ['aqts-capture-trigger-QA-aqtsCaptureTrigger']
